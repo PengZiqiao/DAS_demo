@@ -1,0 +1,27 @@
+{% macro FormField(field, label=false) %}
+    <div class="form-group {% if field.errors %}has-error{% endif %}">
+        {# label #}
+        {% if label %}
+            {{ field.label(class='control-label') }}
+        {% endif %}
+
+        {# input filed #}
+        {{ field(class='form-control', placeholder=field.label.text) }}
+
+        {# error #}
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <span class="help-block">{{ error }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endmacro %}
+
+
+
+{% macro Alert(string, type) %}
+    <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      {{ string }}
+    </div>
+{% endmacro %}
