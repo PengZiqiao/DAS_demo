@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>{% block title %}Page Title{% endblock %}</title>
 
-    {% block styles %}
+    {% block common_styles %}
         <!-- Bootstrap -->
         <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -19,18 +19,29 @@
         <![endif]-->
     {% endblock %}
 
+    {% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+    {% endblock %}
+
 
 </head>
 <body>
-{% block content %}
-
+{% block navbar %}
+    {% include "navbar.html" %}
 {% endblock %}
 
-{% block scripts %}
+{% block content %}
+{% endblock %}
+
+{% block common_scripts %}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
 </body>
 </html>

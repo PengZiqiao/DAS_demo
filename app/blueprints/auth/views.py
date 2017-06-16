@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request, flash
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required,current_user
 
 from . import bp
 from .models import User
@@ -25,3 +25,21 @@ def logout():
     logout_user()
     flash('退出成功，请重新登陆', 'success')
     return redirect(url_for('auth.login'))
+
+
+@bp.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    from .forms import ChangePasswordForm
+    form = ChangePasswordForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(name=current_user.name).first()
+        if user.verify_password(form.old_password.data):
+            user.change_password(form.password.data)
+            flash('密码修改成功', 'success')
+            form.old_password.data = ""
+        else:
+            flash('旧密码错误', 'danger')
+            form.old_password.data = ""
+
+    return render_template('auth/change_password.html', **locals())

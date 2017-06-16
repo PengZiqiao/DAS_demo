@@ -3,64 +3,63 @@
 {% from 'macros.html' import Alert %}
 
 {% block styles %}
-    {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
+{% block navbar %}
+{% endblock %}
+
 {% block content %}
-    <div class="inner-bg">
-        <div class="container">
+    <div class="container">
 
-            {# 头部 #}
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3 text" align="center">
-                    <img src="{{ url_for('static', filename='img/winsun.png') }}" alt="winsun">
-                    <h1><strong>- 数据分析平台 -</strong></h1>
-                </div>
+        {# 头部 #}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text" align="center">
+                <img src="{{ url_for('static', filename='img/winsun.png') }}" alt="winsun">
+                <h1><strong>- 数据分析平台 -</strong></h1>
             </div>
-
-            {# 表单 #}
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-
-                    {# top #}
-                    <div class="form-top">
-                        <div class="form-top-left">
-                            <h3>登陆</h3>
-                            {% with messages = get_flashed_messages(with_categories=true) %}
-                                {% if messages %}
-                                    {% for category, message in messages %}
-                                        <p class="text-{{ category }}">{{ message }}</p>
-                                    {% endfor %}
-                                {% else %}
-                                    <p class="text-muted">请输入您的用户名和密码：</p>
-                                {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="form-top-right">
-                            <span class="glyphicon glyphicon-lock"></span>
-                        </div>
-                    </div>
-
-                    {# bottom #}
-                    <div class="form-bottom">
-
-                        <form class="login-form" method="post">
-                            {{ form.hidden_tag() }}
-                            {{ FormField(form.name) }}
-                            {{ FormField(form.password) }}
-                            {{ form.submit(class='btn btn-warning btn-block') }}
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
+
+        {# 表单 #}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+
+                {# top #}
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>登陆</h3>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <p class="text-{{ category }}">{{ message }}</p>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-muted">请输入您的用户名和密码：</p>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="form-top-right">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </div>
+                </div><!-- /from-top -->
+
+                {# bottom #}
+                <div class="form-bottom">
+
+                    <form class="login-form" method="post">
+                        {{ form.hidden_tag() }}
+                        {{ FormField(form.name) }}
+                        {{ FormField(form.password) }}
+                        {{ form.submit(class='btn btn-warning btn-block') }}
+                    </form>
+                </div><!-- /nfrom-bottom -->
+            </div><!-- /col-sm-6 col-sm-offset-3-->
+        </div><!-- /row -->
+
+    </div><!-- /container -->
 {% endblock %}
 
 {% block scripts %}
-    {{ super() }}
     <script src="https://cdn.bootcss.com/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
     <script>
         jQuery(document).ready(function () {

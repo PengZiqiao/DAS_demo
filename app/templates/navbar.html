@@ -1,0 +1,63 @@
+{# 导航栏的内容，链接：url_for(nav[key]) #}
+{% set nav = {
+
+    } %}
+
+{# 导航栏 #}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            {# 折叠后的菜单键，即3个"icon-bar"  #}
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            {# 导航栏标题 #}
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">DAS Demo</a>
+        </div><!-- /narbar header -->
+
+        <div id="navbar" class="collapse navbar-collapse">
+            {# 登陆情况下 #}
+            {% if current_user.is_authenticated %}
+                {# 导航栏内容 #}
+                <ul class="nav navbar-nav">
+                    {% for each in nav %}
+                        {% set url = url_for(nav[each]) %}
+                        <li {{ ' class="active" '|safe if url == request.path }}>
+                            <a href="{{ url }}">
+                                {{ each }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {# 用户下拉菜单 #}
+                <ul class="nav navbar-nav navbar-right">
+                    <div class="dropdown">
+                        {# 显示当前用户名称和一个下拉箭头 #}
+                        <a class="btn btn-default dropdown-toggle navbar-btn" type="button" id="userDrop"
+                           data-toggle="dropdown">
+                            {{ current_user.name }}
+                            <span class="caret"></span>
+                        </a>
+                        {# 下拉菜单内内容 #}
+                        <ul class="dropdown-menu" aria-labelledby="userDrop">
+                            <li><a href="#">帮助</a></li>
+                            <li><a href="{{ url_for('auth.change_password') }}">修改密码</a></li>
+                            {# 分割线 #}
+                            <li role="separator" class="divider"></li>
+                            <li><a href={{ url_for('auth.logout') }}>退出</a></li>
+                        </ul>
+                    </div>
+                </ul>
+                {# 未登陆情况下 #}
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <a class="btn btn-success navbar-btn" href="{{ url_for('auth.login') }}">登录</a>
+                </ul>
+            {% endif %}
+        </div><!-- /narbar navbar-collapse -->
+    </div><!-- /container -->
+</nav>
